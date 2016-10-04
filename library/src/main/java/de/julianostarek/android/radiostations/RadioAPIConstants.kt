@@ -18,12 +18,12 @@ package de.julianostarek.android.radiostations
 
 internal object RadioAPIConstants {
 
-    internal const val DAR_FM_PLAYLIST = "https://api.dar.fm/playlist.php"
-    internal const val DAR_FM_SPECIFIC = "https://api.dar.fm/darstations.php"
+    internal const val DAR_FM_PLAYLIST = "http://api.dar.fm/playlist.php"
+    internal const val DAR_FM_SPECIFIC = "http://api.dar.fm/darstations.php"
     internal const val DAR_FM_PARAM_TOKEN = "partner_token="
     internal const val DAR_FM_PARAM_ID = "station_id="
     internal const val DAR_FM_PARAM_CALLSIGN = "callsign="
-    internal const val DAR_FM_STREAM_BASE = "https://stream.dar.fm/"
+    internal const val DAR_FM_STREAM_BASE = "http://stream.dar.fm/"
     internal const val DAR_FM_PARAM_FORCE_MATCH_TITLE = "@title="
     internal const val DAR_FM_PARAM_FORCE_MATCH_ARTIST = "@artist="
 
