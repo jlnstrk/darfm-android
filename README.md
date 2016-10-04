@@ -3,7 +3,7 @@
 This project is an Android wrapper for the DAR.fm radio API (UberStations / OnRad.io) written in Kotlin.
 All methods are synchronous, so you must access them asynchronously.
 
-[ ![0.2](https://jitpack.io/v/julianostarek/darfm-android.svg)](https://jitpack.io/#julianostarek/darfm-android)
+[ ![0.1.0](https://jitpack.io/v/julianostarek/darfm-android.svg)](https://jitpack.io/#julianostarek/darfm-android)
 
 ## Demo
 
