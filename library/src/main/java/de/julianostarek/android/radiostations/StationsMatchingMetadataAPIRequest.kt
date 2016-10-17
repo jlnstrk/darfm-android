@@ -25,12 +25,12 @@ internal class StationsMatchingMetadataAPIRequest (private val title: String = "
         get() {
             var base = RadioAPIConstants.DAR_FM_PLAYLIST + RadioAPIConstants.DAR_FM_PARAM_QUERY
             if (match) {
-                if (artist.length > 0) base += "%20" + RadioAPIConstants.DAR_FM_PARAM_FORCE_MATCH_ARTIST + "%20" + URLEncoder.encode(artist, "UTF-8")
-                if (title.length > 0) base += "%20" + RadioAPIConstants.DAR_FM_PARAM_FORCE_MATCH_TITLE + "%20" + URLEncoder.encode(title, "UTF-8")
+                if (artist.isNotEmpty()) base += "%20" + RadioAPIConstants.DAR_FM_PARAM_FORCE_MATCH_ARTIST + "%20" + URLEncoder.encode(artist, "UTF-8")
+                if (title.isNotEmpty()) base += "%20" + RadioAPIConstants.DAR_FM_PARAM_FORCE_MATCH_TITLE + "%20" + URLEncoder.encode(title, "UTF-8")
             } else {
-                if (artist.length > 0) base += URLEncoder.encode(artist, "UTF-8")
-                if (title.length > 0) {
-                    if (artist.length > 0) base += "%20"
+                if (artist.isNotEmpty()) base += URLEncoder.encode(artist, "UTF-8")
+                if (title.isNotEmpty()) {
+                    if (artist.isNotEmpty()) base += "%20"
                     base += URLEncoder.encode(title, "UTF-8")
                 }
             }

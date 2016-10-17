@@ -18,4 +18,6 @@ package de.julianostarek.android.radiostations
 
 open class BasicStation(val name: String, val genre: String, val id: Long)
 
-open class ExtendedStation(name: String, genre: String, id: Long, val websiteUrl: String, val streamUrl: String, val imageUrl: String, val encoding: String, val bitrate: String, val description: String, val country: String) : BasicStation(name, genre, id)
+open class ExtendedStation(name: String, genre: String, id: Long, val websiteUrl: String, val imageUrl: String, val encoding: String, val bitrate: String, val description: String, val country: String) : BasicStation(name, genre, id)
+
+fun BasicStation.streamUrl() = RadioAPIConstants.DAR_FM_STREAM_BASE + id

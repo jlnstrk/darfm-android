@@ -40,7 +40,6 @@ internal class StationDetailsAPIRequest (private val id: Long = 0, private val n
         val id = station.getElementsByTag("station_id").first().text().toLong()
         val name = station.getElementsByTag("callsign").first().text()
         val genre = station.getElementsByTag("genre").first().text()
-        val streamUrl = RadioAPIConstants.DAR_FM_STREAM_BASE + id
         val websiteUrl = station.getElementsByTag("websiteurl").first().text()
         val imageUrl = station.getElementsByTag("imageurl").first().text()
         val bitrate = station.getElementsByTag("bitrate").first().text()
@@ -48,6 +47,6 @@ internal class StationDetailsAPIRequest (private val id: Long = 0, private val n
         val description = station.getElementsByTag("description").first().text()
         val country = station.getElementsByTag("country").first().text()
 
-        return ExtendedStation(name, genre, id, websiteUrl, streamUrl, imageUrl, encoding, bitrate, description, country)
+        return ExtendedStation(name, genre, id, websiteUrl, imageUrl, encoding, bitrate, description, country)
     }
 }

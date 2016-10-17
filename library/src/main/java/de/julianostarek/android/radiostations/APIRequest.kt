@@ -32,7 +32,7 @@ abstract class APIRequest<out Result> {
         val items = ArrayList<BasicStation>()
 
         for (i in 0..stations.size - 1) {
-            val station = stations.get(i)
+            val station = stations[i]
             val title = station.getElementsByTag("callsign").first().text()
             val genre = station.getElementsByTag("genre").first().text()
             val id = station.getElementsByTag("station_id").first().text().toLong()

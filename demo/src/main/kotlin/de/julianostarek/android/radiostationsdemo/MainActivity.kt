@@ -23,7 +23,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v4.util.Pair
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -43,6 +42,7 @@ import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
 import de.julianostarek.android.radiostations.BasicStation
 import de.julianostarek.android.radiostations.ExtendedStation
 import de.julianostarek.android.radiostations.RadioAPI
+import de.julianostarek.android.radiostations.streamUrl
 import de.julianostarek.generictasks.GenericTask
 import de.julianostarek.generictasks.TaskCallback
 
@@ -56,26 +56,28 @@ class MainActivity : AppCompatActivity(), TextView.OnEditorActionListener, View.
 
     override fun onClick(p0: View?) {
         if (editText.text.toString().length > 1) {
-            GenericTask(object : TaskCallback<List<BasicStation>> {
+            GenericTask(object : TaskCallback<List<BasicStation>?> {
                 override fun onTaskStart() {
                     progressDialog!!.show()
                 }
 
-                override fun onTaskResult(result: List<BasicStation>, failed: Boolean) {
+                override fun onTaskResult(result: List<BasicStation>?, failed: Boolean) {
                     progressDialog!!.dismiss()
-                    if (!failed) {
+                    if (!failed && result != null) {
                         resultsDialog = MaterialDialog.Builder(this@MainActivity)
                                 .title("These are the results")
                                 .adapter(ResultsAdapter(this@MainActivity, result, radioApi, object : StationCallback {
                                     override fun onItemClicked(station: BasicStation) {
                                         resultsDialog?.dismiss()
-                                        GenericTask(object : TaskCallback<Pair<ExtendedStation, ByteArray>> {
-                                            override fun onTaskResult(result: Pair<ExtendedStation, ByteArray>, failed: Boolean) {
-                                                MaterialStyledDialog(this@MainActivity)
-                                                        .setTitle(result.first.name)
-                                                        .setDescription("Genre: ${station.genre}\nCountry: ${result.first.country}\nBitrate: ${result.first.bitrate}\nEncoding: ${result.first.encoding}\nWebsite: ${result.first.websiteUrl}\n")
-                                                        .setIcon(BitmapDrawable(resources, BitmapFactory.decodeByteArray(result.second, 0, result.second.size)))
-                                                        .show()
+                                        GenericTask(object : TaskCallback<Pair<ExtendedStation?, ByteArray>?> {
+                                            override fun onTaskResult(result: Pair<ExtendedStation?, ByteArray>?, failed: Boolean) {
+                                                if (!failed && result != null) {
+                                                    MaterialStyledDialog(this@MainActivity)
+                                                            .setTitle(result.first?.name.orEmpty())
+                                                            .setDescription("Genre: ${station.genre}\nCountry: ${result.first?.country}\nBitrate: ${result.first?.bitrate}\nEncoding: ${result.first?.encoding}\nWebsite: ${result.first?.websiteUrl}\n")
+                                                            .setIcon(BitmapDrawable(resources, BitmapFactory.decodeByteArray(result.second, 0, result.second.size)))
+                                                            .show()
+                                                }
                                             }
                                         }).execute { radioApi.getStationImage(station, false) }
                                     }
@@ -129,8 +131,8 @@ class MainActivity : AppCompatActivity(), TextView.OnEditorActionListener, View.
             val item = results[position]
             holder?.title?.text = item.name
             holder?.subtitle?.text = item.genre
-            GenericTask(object : TaskCallback<Pair<ExtendedStation, ByteArray>?> {
-                override fun onTaskResult(result: Pair<ExtendedStation, ByteArray>?, failed: Boolean) {
+            GenericTask(object : TaskCallback<Pair<ExtendedStation?, ByteArray>?> {
+                override fun onTaskResult(result: Pair<ExtendedStation?, ByteArray>?, failed: Boolean) {
                     if (!failed)
                         Glide.with(context).load(result?.second).crossFade().into(holder?.image)
                 }

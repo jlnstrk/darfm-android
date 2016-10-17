@@ -84,6 +84,7 @@ class RadioAPI @JvmOverloads constructor(val partnerToken: String, timeOutMillis
     }
 
     fun getStationsMatchingMetadata(songTitle: String = "", songArtist: String = "", forceMatch: Boolean): List<BasicStation>? {
+        if (songTitle.isEmpty() && songArtist.isEmpty()) return null
         try {
             return query(StationsMatchingMetadataAPIRequest(songTitle, songArtist, forceMatch))
         } catch (e: Exception) {
